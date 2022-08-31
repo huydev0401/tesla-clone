@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Fade from "react-reveal/Fade";
 
 const SectionWrap = styled.div`
   width: 100vw;
@@ -59,15 +60,19 @@ const Bottom = styled.div``;
 function Section({ title, desc, backgroundImg, leftBtn, rightBtn }) {
   return (
     <SectionWrap bgImage={backgroundImg}>
-      <Heading>
-        <h1>{title}</h1>
-        <p>{desc}</p>
-      </Heading>
+      <Fade bottom>
+        <Heading>
+          <h1>{title}</h1>
+          <p>{desc}</p>
+        </Heading>
+      </Fade>
       <Bottom>
-        <ButtonGroup>
-          <LeftButton>{leftBtn}</LeftButton>
-          {rightBtn && <RightButton>{rightBtn}</RightButton>}
-        </ButtonGroup>
+        <Fade bottom>
+          <ButtonGroup>
+            <LeftButton>{leftBtn}</LeftButton>
+            {rightBtn && <RightButton>{rightBtn}</RightButton>}
+          </ButtonGroup>
+        </Fade>
         <DownArrow src="./down-arrow.svg" />
       </Bottom>
     </SectionWrap>
