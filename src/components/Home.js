@@ -1,12 +1,16 @@
 import React from "react";
 import styled from "styled-components";
 import Section from "./Section";
+import { selectCars } from "../features/car/carSlice";
+import { useSelector, useDispatch } from "react-redux";
+import Sidebar from "./common/Sidebar";
+import { closeSidebar } from "../features/sidebar/sidebarSlice";
 
 const Container = styled.div`
   height: 100vh;
 `;
 
-const cars = [
+const listCar = [
   {
     title: "Model S",
     desc: "Order Online for Touchless Delivery",
@@ -57,10 +61,18 @@ const cars = [
 ];
 
 function Home() {
+  const cars = useSelector(selectCars);
+  const sidebar = useSelector((state) => state.sidebar.open);
+  const dispatch = useDispatch();
+
+  const handleCloseSidebar = () => {
+    dispatch(closeSidebar());
+  };
+
   return (
     <Container>
-      {cars &&
-        cars.map((item, index) => (
+      {listCar &&
+        listCar.map((item, index) => (
           <Section
             key={index}
             title={item?.title}
@@ -70,6 +82,11 @@ function Home() {
             rightBtn={item?.rightBtn}
           ></Section>
         ))}
+      <Sidebar
+        show={sidebar}
+        data={cars}
+        onClick={handleCloseSidebar}
+      ></Sidebar>
     </Container>
   );
 }

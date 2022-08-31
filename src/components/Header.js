@@ -1,10 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import MenuIcon from "@material-ui/icons/Menu";
-import CloseIcon from "@material-ui/icons/Close";
-import { useState } from "react";
 import { selectCars } from "../features/car/carSlice";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { openSidebar } from "../features/sidebar/sidebarSlice";
 
 const Container = styled.div`
   min-height: 60px;
@@ -46,46 +45,16 @@ const RightMenu = styled.div`
   }
 `;
 
-const CustomMenu = styled(MenuIcon)`
+const Hamburger = styled(MenuIcon)`
   cursor: pointer;
-`;
-
-const Sidebar = styled.div`
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  background-color: white;
-  width: 300px;
-  z-index: 99;
-  list-style: none;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  text-align: start;
-  transform: ${(props) => (props.show ? "translateX(0)" : "translateX(100%)")};
-  transition: transform 0.2s;
-  li {
-    padding: 15px 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-    a {
-      font-weight: 600;
-    }
-  }
-`;
-
-const CustomClose = styled(CloseIcon)`
-  cursor: pointer;
-`;
-
-const CloseWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
 `;
 
 function Header() {
-  const [openSidebar, setOpenSidebar] = useState(false);
   const cars = useSelector(selectCars);
+  const dispatch = useDispatch();
+  const handleOpenSidebar = () => {
+    dispatch(openSidebar());
+  };
   return (
     <Container>
       <a href="/" alt="logo tesla">
@@ -102,21 +71,8 @@ function Header() {
       <RightMenu>
         <a href="/">Shop</a>
         <a href="/">Tesla Account</a>
-        <CustomMenu onClick={() => setOpenSidebar(true)} />
+        <Hamburger onClick={handleOpenSidebar} />
       </RightMenu>
-      <Sidebar show={openSidebar}>
-        <CloseWrapper>
-          <CustomClose onClick={() => setOpenSidebar(false)} />
-        </CloseWrapper>
-        {cars &&
-          cars.map((item, index) => (
-            <li>
-              <a key={index} href="/">
-                {item}
-              </a>
-            </li>
-          ))}
-      </Sidebar>
     </Container>
   );
 }
