@@ -1,6 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import Fade from "react-reveal/Fade";
+import Heading from "./common/Heading";
+import Button from "./common/Button";
+import ButtonGroup from "./common/ButtonGroup";
+import DownArrow from "./common/DownArrow";
 
 const SectionWrap = styled.div`
   width: 100vw;
@@ -15,65 +19,22 @@ const SectionWrap = styled.div`
   align-items: center;
 `;
 
-const Heading = styled.div`
-  padding: 15vh;
-  text-align: center;
-`;
-
-const ButtonGroup = styled.div`
-  display: flex;
-  margin-bottom: 30px;
-  @media (max-width: 768px) {
-    flex-direction: column;
-  }
-`;
-
-const LeftButton = styled.div`
-  background-color: rgba(23, 36, 32, 0.8);
-  height: 40px;
-  width: 256px;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 100px;
-  opacity: 0.85;
-  text-transform: uppercase;
-  font-size: 12px;
-  cursor: pointer;
-  margin: 8px;
-`;
-const RightButton = styled(LeftButton)`
-  background-color: white;
-  opacity: 0.65;
-  color: black;
-`;
-
-const DownArrow = styled.img`
-  height: 40px;
-  overflow-x: hidden;
-  animation: animateDown infinite 1.5s linear;
-`;
-
 const Bottom = styled.div``;
 
 function Section({ title, desc, backgroundImg, leftBtn, rightBtn }) {
   return (
     <SectionWrap bgImage={backgroundImg}>
       <Fade bottom>
-        <Heading>
-          <h1>{title}</h1>
-          <p>{desc}</p>
-        </Heading>
+        <Heading title={title} desc={desc}></Heading>
       </Fade>
       <Bottom>
         <Fade bottom>
           <ButtonGroup>
-            <LeftButton>{leftBtn}</LeftButton>
-            {rightBtn && <RightButton>{rightBtn}</RightButton>}
+            <Button>{leftBtn}</Button>
+            {rightBtn && <Button kind="secondary">{rightBtn}</Button>}
           </ButtonGroup>
         </Fade>
-        <DownArrow src="./down-arrow.svg" />
+        <DownArrow />
       </Bottom>
     </SectionWrap>
   );
